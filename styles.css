@@ -11,17 +11,24 @@ body {
 .container {
     display: flex;
     justify-content: space-between;
-    width: 80%;
+    flex-wrap: wrap;
+    width: 90%;
+    max-width: 1200px;
+}
+
+.timer-group {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
 }
 
 .timer {
     background: #fff;
     border: 1px solid #ccc;
     border-radius: 8px;
-    padding: 20px;
+    padding: 15px;
     text-align: center;
     box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-    width: 300px;
 }
 
 .timer-display {
@@ -29,17 +36,24 @@ body {
     margin: 10px 0;
 }
 
-button {
+.timer-btn {
     background-color: #007BFF;
     color: white;
     border: none;
     border-radius: 5px;
-    padding: 10px 20px;
+    padding: 10px 15px;
     cursor: pointer;
     margin: 5px;
     font-size: 1em;
 }
 
-button:hover {
+.timer-btn:hover {
     background-color: #0056b3;
+}
+
+@media (max-width: 768px) {
+    .container {
+        flex-direction: column;
+        align-items: center;
+    }
 }
