@@ -1,32 +1,50 @@
-const timers = {
-    team: {
-        '4min': { time: 240, running: false, intervalId: null },
-        '3min': { time: 180, running: false, intervalId: null },
-        '2min': { time: 120, running: false, intervalId: null },
-        'prep': { time: 60, running: false, intervalId: null }
-    },
-    opponent: {
-        '4min': { time: 240, running: false, intervalId: null },
-        '3min': { time: 180, running: false, intervalId: null },
-        '2min': { time: 120, running: false, intervalId: null },
-        'prep': { time: 60, running: false, intervalId: null }
-    }
+const timerSettings = {
+    '4min': 240,
+    '3min': 180,
+    '2min': 120,
+    'prep': 60
 };
 
-function updateTimerDisplay(timerId, time) {
-    const minutes = Math.floor(time / 60);
-    const seconds = time % 60;
-    document.getElementById(timerId).textContent = `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+const timers = {
+    team: {},
+    opponent: {}
+};
+
+function createTimerSection(sectionId, teamOrOpponent) {
+    const timerGroup = document.getElementById(sectionId);
+    for (const [label, time] of Object.entries(timerSettings)) {
+        const timerId = `${teamOrOpponent}-${label}`;
+        const timerElement = document.createElement('div');
+        timerElement.className = 'timer';
+        timerElement.innerHTML = `
+            <div id="${timerId}-display" class="timer-display">${formatTime(time)}</div>
+            <button class="timer-btn" data-action="start" data-timer="${timerId}">Start ${label.replace('min', ' Min')}</button>
+            <button class="timer-btn" data-action="pause" data-timer="${timerId}">Pause</button>
+            <button class="timer-btn" data-action="reset" data-timer="${timerId}">Reset</button>
+        `;
+        timerGroup.appendChild(timerElement);
+        timers[teamOrOpponent][label] = { time, running: false, intervalId: null };
+    }
 }
 
-function startTimer(teamOrOpponent, timerType) {
-    const timer = timers[teamOrOpponent][timerType];
+function formatTime(seconds) {
+    const minutes = Math.floor(seconds / 60);
+    const remainingSeconds = seconds % 60;
+    return `${String(minutes).padStart(2, '0')}:${String(remainingSeconds).padStart(2, '0')}`;
+}
+
+function updateTimerDisplay(timerId, time) {
+    document.getElementById(`${timerId}-display`).textContent = formatTime(time);
+}
+
+function startTimer(teamOrOpponent, label) {
+    const timer = timers[teamOrOpponent][label];
     if (timer.running) return;
 
     timer.intervalId = setInterval(() => {
         if (timer.time > 0) {
             timer.time--;
-            updateTimerDisplay(`${teamOrOpponent}-${timerType}-display`, timer.time);
+            updateTimerDisplay(`${teamOrOpponent}-${label}`, timer.time);
         } else {
             clearInterval(timer.intervalId);
             timer.running = false;
@@ -36,25 +54,43 @@ function startTimer(teamOrOpponent, timerType) {
     timer.running = true;
 }
 
-function stopTimer(teamOrOpponent, timerType) {
-    const timer = timers[teamOrOpponent][timerType];
+function stopTimer(teamOrOpponent, label) {
+    const timer = timers[teamOrOpponent][label];
     clearInterval(timer.intervalId);
     timer.running = false;
 }
 
-function resetTimer(teamOrOpponent, timerType) {
-    const timer = timers[teamOrOpponent][timerType];
-    stopTimer(teamOrOpponent, timerType);
-    timer.time = {
-        '4min': 240,
-        '3min': 180,
-        '2min': 120,
-        'prep': 60
-    }[timerType];
-    updateTimerDisplay(`${teamOrOpponent}-${timerType}-display`, timer.time);
+function resetTimer(teamOrOpponent, label) {
+    const timer = timers[teamOrOpponent][label];
+    stopTimer(teamOrOpponent, label);
+    timer.time = timerSettings[label];
+    updateTimerDisplay(`${teamOrOpponent}-${label}`, timer.time);
 }
 
-document.querySelectorAll('.timer-btn').forEach(button => {
-    button.addEventListener('click', () => {
-        const teamOrOpponent = button.getAttribute('data-timer').split('-')[0];
-        const
+// Setup event listeners
+function setupEventListeners() {
+    document.querySelectorAll('.timer-btn').forEach(button => {
+        button.addEventListener('click', () => {
+            const action = button.getAttribute('data-action');
+            const timerId = button.getAttribute('data-timer');
+            const [teamOrOpponent, label] = timerId.split('-');
+            if (action === 'start') startTimer(teamOrOpponent, label);
+            if (action === 'pause') stopTimer(teamOrOpponent, label);
+            if (action === 'reset') resetTimer(teamOrOpponent, label);
+        });
+    });
+
+    document.getElementById('team-dark-mode').addEventListener('click', toggleDarkMode);
+    document.getElementById('opponent-dark-mode').addEventListener('click', toggleDarkMode);
+}
+
+function toggleDarkMode() {
+    document.body.classList.toggle('dark-mode');
+}
+
+// Initialize Timers
+createTimerSection('team-timers', 'team');
+createTimerSection('opponent-timers', 'opponent');
+
+// Set up event listeners
+setupEventListeners();
