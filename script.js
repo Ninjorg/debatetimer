@@ -1,4 +1,3 @@
-// Timer State
 const timers = {
     team: {
         '4min': { time: 240, running: false, intervalId: null },
@@ -27,7 +26,7 @@ function startTimer(teamOrOpponent, timerType) {
     timer.intervalId = setInterval(() => {
         if (timer.time > 0) {
             timer.time--;
-            updateTimerDisplay(`${teamOrOpponent}-${timerType}`, timer.time);
+            updateTimerDisplay(`${teamOrOpponent}-${timerType}-display`, timer.time);
         } else {
             clearInterval(timer.intervalId);
             timer.running = false;
@@ -52,30 +51,10 @@ function resetTimer(teamOrOpponent, timerType) {
         '2min': 120,
         'prep': 60
     }[timerType];
-    updateTimerDisplay(`${teamOrOpponent}-${timerType}`, timer.time);
+    updateTimerDisplay(`${teamOrOpponent}-${timerType}-display`, timer.time);
 }
 
-// Event Listeners for Team Timers
-document.getElementById('team-4min-start').addEventListener('click', () => startTimer('team', '4min'));
-document.getElementById('team-4min-pause').addEventListener('click', () => stopTimer('team', '4min'));
-document.getElementById('team-4min-reset').addEventListener('click', () => resetTimer('team', '4min'));
-
-document.getElementById('team-3min-start').addEventListener('click', () => startTimer('team', '3min'));
-document.getElementById('team-3min-pause').addEventListener('click', () => stopTimer('team', '3min'));
-document.getElementById('team-3min-reset').addEventListener('click', () => resetTimer('team', '3min'));
-
-document.getElementById('team-2min-start').addEventListener('click', () => startTimer('team', '2min'));
-document.getElementById('team-2min-pause').addEventListener('click', () => stopTimer('team', '2min'));
-document.getElementById('team-2min-reset').addEventListener('click', () => resetTimer('team', '2min'));
-
-document.getElementById('team-prep-start').addEventListener('click', () => startTimer('team', 'prep'));
-document.getElementById('team-prep-pause').addEventListener('click', () => stopTimer('team', 'prep'));
-document.getElementById('team-prep-reset').addEventListener('click', () => resetTimer('team', 'prep'));
-
-// Event Listeners for Opponent Timers
-document.getElementById('opponent-4min-start').addEventListener('click', () => startTimer('opponent', '4min'));
-document.getElementById('opponent-4min-pause').addEventListener('click', () => stopTimer('opponent', '4min'));
-document.getElementById('opponent-4min-reset').addEventListener('click', () => resetTimer('opponent', '4min'));
-
-document.getElementById('opponent-3min-start').addEventListener('click', () => startTimer('opponent', '3min'));
-document.getElementById('opponent-3min-pause').addEventListener('click', () => stopTimer('opponent', '3min'));
+document.querySelectorAll('.timer-btn').forEach(button => {
+    button.addEventListener('click', () => {
+        const teamOrOpponent = button.getAttribute('data-timer').split('-')[0];
+        const
