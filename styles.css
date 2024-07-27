@@ -1,11 +1,10 @@
+/* Basic Styling */
 body {
     font-family: Arial, sans-serif;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
     margin: 0;
+    padding: 0;
     background-color: #f0f0f0;
+    transition: background-color 0.3s;
 }
 
 .container {
@@ -14,6 +13,20 @@ body {
     flex-wrap: wrap;
     width: 90%;
     max-width: 1200px;
+    margin: auto;
+    padding: 20px;
+}
+
+.timer-section {
+    background: #fff;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 20px;
+    text-align: center;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    width: 45%;
+    margin-bottom: 20px;
+    transition: background-color 0.3s, border-color 0.3s;
 }
 
 .timer-group {
@@ -29,11 +42,14 @@ body {
     padding: 15px;
     text-align: center;
     box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    transition: background-color 0.3s, border-color 0.3s;
 }
 
 .timer-display {
     font-size: 2em;
     margin: 10px 0;
+    color: #000; /* Ensure text color is always visible */
+    transition: color 0.3s;
 }
 
 .timer-btn {
@@ -45,15 +61,64 @@ body {
     cursor: pointer;
     margin: 5px;
     font-size: 1em;
+    transition: background-color 0.3s;
 }
 
 .timer-btn:hover {
     background-color: #0056b3;
 }
 
+/* Dark Mode Styles */
+body.dark-mode {
+    background-color: #333;
+    color: #fff;
+}
+
+body.dark-mode .timer-section {
+    background: #444;
+    border-color: #555;
+}
+
+body.dark-mode .timer {
+    background: #555;
+    border-color: #666;
+}
+
+body.dark-mode .timer-display {
+    color: #fff; /* Ensure timer numbers are visible in dark mode */
+}
+
+body.dark-mode .timer-btn {
+    background-color: #007BFF;
+    color: #fff;
+}
+
+body.dark-mode .timer-btn:hover {
+    background-color: #0056b3;
+}
+
+.mode-btn {
+    background-color: #666;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 15px;
+    cursor: pointer;
+    margin: 10px 0;
+    font-size: 1em;
+}
+
+.mode-btn:hover {
+    background-color: #555;
+}
+
 @media (max-width: 768px) {
     .container {
         flex-direction: column;
         align-items: center;
+    }
+
+    .timer-section {
+        width: 90%;
     }
 }
