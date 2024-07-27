@@ -1,44 +1,81 @@
-body {
-    font-family: Arial, sans-serif;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    margin: 0;
-    background-color: #f0f0f0;
+// Timer State
+const timers = {
+    team: {
+        '4min': { time: 240, running: false, intervalId: null },
+        '3min': { time: 180, running: false, intervalId: null },
+        '2min': { time: 120, running: false, intervalId: null },
+        'prep': { time: 60, running: false, intervalId: null }
+    },
+    opponent: {
+        '4min': { time: 240, running: false, intervalId: null },
+        '3min': { time: 180, running: false, intervalId: null },
+        '2min': { time: 120, running: false, intervalId: null },
+        'prep': { time: 60, running: false, intervalId: null }
+    }
+};
+
+function updateTimerDisplay(timerId, time) {
+    const minutes = Math.floor(time / 60);
+    const seconds = time % 60;
+    document.getElementById(timerId).textContent = `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
 }
 
-.container {
-    display: flex;
-    justify-content: space-between;
-    width: 60%;
+function startTimer(teamOrOpponent, timerType) {
+    const timer = timers[teamOrOpponent][timerType];
+    if (timer.running) return;
+
+    timer.intervalId = setInterval(() => {
+        if (timer.time > 0) {
+            timer.time--;
+            updateTimerDisplay(`${teamOrOpponent}-${timerType}`, timer.time);
+        } else {
+            clearInterval(timer.intervalId);
+            timer.running = false;
+        }
+    }, 1000);
+
+    timer.running = true;
 }
 
-.timer {
-    background: #fff;
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    padding: 20px;
-    text-align: center;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+function stopTimer(teamOrOpponent, timerType) {
+    const timer = timers[teamOrOpponent][timerType];
+    clearInterval(timer.intervalId);
+    timer.running = false;
 }
 
-#team-time, #opponent-time {
-    font-size: 2em;
-    margin: 10px 0;
+function resetTimer(teamOrOpponent, timerType) {
+    const timer = timers[teamOrOpponent][timerType];
+    stopTimer(teamOrOpponent, timerType);
+    timer.time = {
+        '4min': 240,
+        '3min': 180,
+        '2min': 120,
+        'prep': 60
+    }[timerType];
+    updateTimerDisplay(`${teamOrOpponent}-${timerType}`, timer.time);
 }
 
-button {
-    background-color: #007BFF;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    padding: 10px 20px;
-    cursor: pointer;
-    margin: 5px;
-    font-size: 1em;
-}
+// Event Listeners for Team Timers
+document.getElementById('team-4min-start').addEventListener('click', () => startTimer('team', '4min'));
+document.getElementById('team-4min-pause').addEventListener('click', () => stopTimer('team', '4min'));
+document.getElementById('team-4min-reset').addEventListener('click', () => resetTimer('team', '4min'));
 
-button:hover {
-    background-color: #0056b3;
-}
+document.getElementById('team-3min-start').addEventListener('click', () => startTimer('team', '3min'));
+document.getElementById('team-3min-pause').addEventListener('click', () => stopTimer('team', '3min'));
+document.getElementById('team-3min-reset').addEventListener('click', () => resetTimer('team', '3min'));
+
+document.getElementById('team-2min-start').addEventListener('click', () => startTimer('team', '2min'));
+document.getElementById('team-2min-pause').addEventListener('click', () => stopTimer('team', '2min'));
+document.getElementById('team-2min-reset').addEventListener('click', () => resetTimer('team', '2min'));
+
+document.getElementById('team-prep-start').addEventListener('click', () => startTimer('team', 'prep'));
+document.getElementById('team-prep-pause').addEventListener('click', () => stopTimer('team', 'prep'));
+document.getElementById('team-prep-reset').addEventListener('click', () => resetTimer('team', 'prep'));
+
+// Event Listeners for Opponent Timers
+document.getElementById('opponent-4min-start').addEventListener('click', () => startTimer('opponent', '4min'));
+document.getElementById('opponent-4min-pause').addEventListener('click', () => stopTimer('opponent', '4min'));
+document.getElementById('opponent-4min-reset').addEventListener('click', () => resetTimer('opponent', '4min'));
+
+document.getElementById('opponent-3min-start').addEventListener('click', () => startTimer('opponent', '3min'));
+document.getElementById('opponent-3min-pause').addEventListener('click', () => stopTimer('opponent', '3min'));
