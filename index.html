@@ -8,53 +8,63 @@
 </head>
 <body>
     <div class="container">
-        <div class="timer">
+        <div class="team-timers">
             <h2>Your Team</h2>
-            <div id="team-timers">
-                <div id="team-4min" class="timer-display">04:00</div>
-                <button id="team-4min-start">Start 4 Min</button>
-                <button id="team-4min-pause">Pause</button>
-                <button id="team-4min-reset">Reset</button>
-                
-                <div id="team-3min" class="timer-display">03:00</div>
-                <button id="team-3min-start">Start 3 Min</button>
-                <button id="team-3min-pause">Pause</button>
-                <button id="team-3min-reset">Reset</button>
-
-                <div id="team-2min" class="timer-display">02:00</div>
-                <button id="team-2min-start">Start 2 Min</button>
-                <button id="team-2min-pause">Pause</button>
-                <button id="team-2min-reset">Reset</button>
-                
-                <div id="team-prep" class="timer-display">01:00</div>
-                <button id="team-prep-start">Start Prep</button>
-                <button id="team-prep-pause">Pause</button>
-                <button id="team-prep-reset">Reset</button>
+            <div class="timer-group" id="team-timers">
+                <div class="timer">
+                    <div id="team-4min-display" class="timer-display">04:00</div>
+                    <button class="timer-btn" data-action="start" data-timer="team-4min">Start 4 Min</button>
+                    <button class="timer-btn" data-action="pause" data-timer="team-4min">Pause</button>
+                    <button class="timer-btn" data-action="reset" data-timer="team-4min">Reset</button>
+                </div>
+                <div class="timer">
+                    <div id="team-3min-display" class="timer-display">03:00</div>
+                    <button class="timer-btn" data-action="start" data-timer="team-3min">Start 3 Min</button>
+                    <button class="timer-btn" data-action="pause" data-timer="team-3min">Pause</button>
+                    <button class="timer-btn" data-action="reset" data-timer="team-3min">Reset</button>
+                </div>
+                <div class="timer">
+                    <div id="team-2min-display" class="timer-display">02:00</div>
+                    <button class="timer-btn" data-action="start" data-timer="team-2min">Start 2 Min</button>
+                    <button class="timer-btn" data-action="pause" data-timer="team-2min">Pause</button>
+                    <button class="timer-btn" data-action="reset" data-timer="team-2min">Reset</button>
+                </div>
+                <div class="timer">
+                    <div id="team-prep-display" class="timer-display">01:00</div>
+                    <button class="timer-btn" data-action="start" data-timer="team-prep">Start Prep</button>
+                    <button class="timer-btn" data-action="pause" data-timer="team-prep">Pause</button>
+                    <button class="timer-btn" data-action="reset" data-timer="team-prep">Reset</button>
+                </div>
             </div>
         </div>
         
-        <div class="timer">
+        <div class="opponent-timers">
             <h2>Opponent</h2>
-            <div id="opponent-timers">
-                <div id="opponent-4min" class="timer-display">04:00</div>
-                <button id="opponent-4min-start">Start 4 Min</button>
-                <button id="opponent-4min-pause">Pause</button>
-                <button id="opponent-4min-reset">Reset</button>
-                
-                <div id="opponent-3min" class="timer-display">03:00</div>
-                <button id="opponent-3min-start">Start 3 Min</button>
-                <button id="opponent-3min-pause">Pause</button>
-                <button id="opponent-3min-reset">Reset</button>
-
-                <div id="opponent-2min" class="timer-display">02:00</div>
-                <button id="opponent-2min-start">Start 2 Min</button>
-                <button id="opponent-2min-pause">Pause</button>
-                <button id="opponent-2min-reset">Reset</button>
-                
-                <div id="opponent-prep" class="timer-display">01:00</div>
-                <button id="opponent-prep-start">Start Prep</button>
-                <button id="opponent-prep-pause">Pause</button>
-                <button id="opponent-prep-reset">Reset</button>
+            <div class="timer-group" id="opponent-timers">
+                <div class="timer">
+                    <div id="opponent-4min-display" class="timer-display">04:00</div>
+                    <button class="timer-btn" data-action="start" data-timer="opponent-4min">Start 4 Min</button>
+                    <button class="timer-btn" data-action="pause" data-timer="opponent-4min">Pause</button>
+                    <button class="timer-btn" data-action="reset" data-timer="opponent-4min">Reset</button>
+                </div>
+                <div class="timer">
+                    <div id="opponent-3min-display" class="timer-display">03:00</div>
+                    <button class="timer-btn" data-action="start" data-timer="opponent-3min">Start 3 Min</button>
+                    <button class="timer-btn" data-action="pause" data-timer="opponent-3min">Pause</button>
+                    <button class="timer-btn" data-action="reset" data-timer="opponent-3min">Reset</button>
+                </div>
+                <div class="timer">
+                    <div id="opponent-2min-display" class="timer-display">02:00</div>
+                    <button class="timer-btn" data-action="start" data-timer="opponent-2min">Start 2 Min</button>
+                    <button class="timer-btn" data-action="pause" data-timer="opponent-2min">Pause</button>
+                    <button class="timer-btn" data-action="reset" data-timer="opponent-2min">Reset</button>
+                </div>
+                <div class="timer">
+                    <div id="opponent-prep-display" class="timer-display">01:00</div>
+                    <button class="timer-btn" data-action="start" data-timer="opponent-prep">Start Prep</button>
+                    <button class="timer-btn" data-action="pause" data-timer="opponent-prep">Pause</button>
+                    <button class="timer-btn" data-action="reset" data-timer="opponent-prep">Reset</button>
+                </div>
             </div>
         </div>
     </div>
